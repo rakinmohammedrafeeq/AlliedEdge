@@ -169,13 +169,15 @@ export function InstrumentationProvider({
       try {
         console.error("Unhandled rejection", event.reason);
 
+        const reason = event.reason as any;
         const message =
-          typeof event.reason === "string"
-            ? event.reason
-            : event.reason?.message ?? "Unhandled promise rejection";
+          typeof reason === "string"
+            ? reason
+            : (reason?.message ?? "Unhandled promise rejection");
+
         const stack =
-          typeof event.reason === "object" && event.reason
-            ? (event.reason.stack ?? "")
+          typeof reason === "object" && reason
+            ? (reason.stack ?? JSON.stringify(reason, null, 2) ?? "")
             : "";
 
         setError({
