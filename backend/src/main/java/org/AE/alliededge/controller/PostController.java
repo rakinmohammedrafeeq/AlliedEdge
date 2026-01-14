@@ -602,9 +602,87 @@ public class PostController {
                                            @RequestParam(value = "deleteImageId", required = false) List<Long> deleteImageIds,
                                            @RequestParam(value = "deleteVideo", required = false) Boolean deleteVideo,
                                            Principal principal) {
+        post.setId(id);
         post.setDeleteVideo(Boolean.TRUE.equals(deleteVideo));
-        // reuse the existing robust implementation
-        return updatePostAsAdmin(id, post, imageFiles, videoFile, deleteImageIds, deleteVideo, principal);
+
+        Post existing = postService.findPostById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found with Id: " + id));
+
+        // Enforce owner/admin (inside method) rather than role-gating the endpoint.
+        assertCanModifyPost(existing, principal);
+
+        // Start from existing media, then apply deletions/uploads.
+        List<String> currentImages = existing.getImageUrls() != null
+                ? new ArrayList<>(existing.getImageUrls())
+                : new ArrayList<>();
+
+        if (deleteImageIds != null && !deleteImageIds.isEmpty()) {
+            deleteImageIds.stream()
+                    .sorted((a, b) -> Long.compare(b, a))
+                    .forEach(idxLong -> {
+                        int idx = idxLong.intValue();
+                        if (idx >= 0 && idx < currentImages.size()) {
+                            String urlToDelete = currentImages.get(idx);
+                            cloudinaryService.deleteMediaByUrl(urlToDelete);
+                            currentImages.remove(idx);
+                        }
+                    });
+        }
+
+        post.setImageUrls(currentImages);
+
+        if (imageFiles != null && !imageFiles.isEmpty()) {
+            for (MultipartFile imageFile : imageFiles) {
+                if (imageFile == null || imageFile.isEmpty()) continue;
+                if (imageFile.getSize() > 20L * 1024 * 1024) {
+                    throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
+                            "Image file is too large. Max 20MB per image.");
+                }
+                String contentType = imageFile.getContentType();
+                if (contentType == null || !contentType.toLowerCase().startsWith("image/")) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            "Only image files are allowed for images");
+                }
+                String imageUrl = cloudinaryService.uploadMedia(imageFile);
+                post.getImageUrls().add(imageUrl);
+            }
+        }
+
+        String effectiveVideoUrl = existing.getVideoUrl();
+        String effectiveVideoPublicId = existing.getVideoPublicId();
+
+        if (Boolean.TRUE.equals(deleteVideo) && effectiveVideoUrl != null) {
+            if (effectiveVideoPublicId != null && !effectiveVideoPublicId.isBlank()) {
+                cloudinaryService.deleteVideoByPublicId(effectiveVideoPublicId);
+            } else {
+                cloudinaryService.deleteMediaByUrl(effectiveVideoUrl);
+            }
+            effectiveVideoUrl = null;
+            effectiveVideoPublicId = null;
+        }
+
+        if (videoFile != null && !videoFile.isEmpty()) {
+            if (videoFile.getSize() > 100L * 1024 * 1024) {
+                throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
+                        "Video file is too large. Max 100MB.");
+            }
+            if (effectiveVideoUrl != null && !Boolean.TRUE.equals(deleteVideo)) {
+                if (effectiveVideoPublicId != null && !effectiveVideoPublicId.isBlank()) {
+                    cloudinaryService.deleteVideoByPublicId(effectiveVideoPublicId);
+                } else {
+                    cloudinaryService.deleteMediaByUrl(effectiveVideoUrl);
+                }
+            }
+            String videoUrl = cloudinaryService.uploadMedia(videoFile);
+            post.setVideoUrl(videoUrl);
+        } else {
+            post.setVideoUrl(effectiveVideoUrl);
+            post.setVideoPublicId(effectiveVideoPublicId);
+        }
+
+        String userEmail = principal.getName();
+        Post saved = postService.savePost(post, userEmail);
+        return ResponseEntity.ok(saved);
     }
 
     // 👍 Like Post
