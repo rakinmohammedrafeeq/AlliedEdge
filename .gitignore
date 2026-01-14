@@ -1,0 +1,74 @@
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Java / Maven / Spring
+backend/target/
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# (Optional) Maven wrapper jar (many teams commit it for reproducible builds)
+# If you want to commit the wrapper jar, delete this ignore line.
+backend/.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
+
+# Java IDEs / project files
+.classpath
+.project
+.settings/
+.factorypath
+.apt_generated/
+.springBeans
+.sts4-cache/
+
+# NetBeans / Gradle style build output (just in case)
+build/
+dist/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# Node / Vite
+frontend/node_modules/
+**/node_modules/
+frontend/dist/
+**/dist/
+frontend/dist-ssr/
+**/dist-ssr/
+frontend/.vite/
+**/.vite/
+
+# Env/local overrides (keep secrets out of Git)
+.env
+.env.*
+*.env
+*.local
+
+# Visual Studio / misc
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Misc temp
+tmp_upload_test.txt
