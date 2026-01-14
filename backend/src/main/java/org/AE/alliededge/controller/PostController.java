@@ -549,9 +549,9 @@ public class PostController {
         return ResponseEntity.ok(saved);
     }
 
-    // 🟢 Create Author Post
+    // 🟢 Create Post (authenticated user)
     @PostMapping("/posts")
-    @PreAuthorize("hasAnyAuthority('ROLE_AUTHOR','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER','ROLE_AUTHOR','ROLE_ADMIN')")
     public ResponseEntity<Post> createAuthorPost(@Valid @ModelAttribute Post post,
                                                  @RequestParam(value = "imageFiles", required = false) List<MultipartFile> imageFiles,
                                                  @RequestParam(value = "videoFile", required = false) MultipartFile videoFile,
@@ -594,7 +594,7 @@ public class PostController {
     // ✏️ Update Post (owner/admin)
     // The SPA calls PUT /api/posts/{id}. Keep /posts/{id} for backwards compatibility.
     @PutMapping("/posts/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_AUTHOR','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER','ROLE_AUTHOR','ROLE_ADMIN')")
     public ResponseEntity<Post> updatePost(@PathVariable Long id,
                                            @Valid @ModelAttribute Post post,
                                            @RequestParam(value = "imageFiles", required = false) List<MultipartFile> imageFiles,

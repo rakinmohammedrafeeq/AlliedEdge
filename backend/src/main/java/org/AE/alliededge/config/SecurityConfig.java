@@ -108,7 +108,7 @@ public class SecurityConfig {
                 // --- API auth rules ---
                 // Public reads
                 .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-                // Mutations require an authenticated session
+                // Mutations require an authenticated session (role checks handled by @PreAuthorize where needed)
                 .requestMatchers(HttpMethod.POST, "/api/**").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/**").authenticated()
                 .requestMatchers(HttpMethod.PATCH, "/api/**").authenticated()
