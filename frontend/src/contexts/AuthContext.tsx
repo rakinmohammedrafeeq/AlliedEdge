@@ -93,6 +93,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     checkAuth();
   }, []);
 
+  useEffect(() => {
+    // Keep auth state fresh across OAuth redirects, tab switches, and long-lived sessions.
+    const onFocus = () => {
+      // Fire-and-forget; errors are handled inside checkAuth.
+      checkAuth();
+    };
+
+    window.addEventListener('focus', onFocus);
+
+    // Periodic refresh helps when cookies/session change server-side while SPA stays open.
+    const id = window.setInterval(() => {
+      checkAuth();
+    }, 60_000);
+
+    return () => {
+      window.removeEventListener('focus', onFocus);
+      window.clearInterval(id);
+    };
+  }, []);
+
   const logout = async () => {
     // Optimistically update UI, but also await the backend logout so we don't leave
     // an unhandled rejection that triggers the global runtime-error overlay.
