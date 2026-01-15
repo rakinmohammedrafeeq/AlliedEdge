@@ -60,6 +60,11 @@ function isFormData(body: unknown): body is FormData {
   return typeof FormData !== "undefined" && body instanceof FormData;
 }
 
+// In a cross-site deployment (Vercel -> Render), some browsers partition or hide
+// backend cookies from `document.cookie`. We still can obtain the CSRF token
+// via the JSON body returned by GET /api/csrf, so cache it here.
+let cachedCsrfToken: string | undefined;
+
 /**
  * Single API client for the entire app.
  * - Always sends cookies (session-based auth).
@@ -67,10 +72,10 @@ function isFormData(body: unknown): body is FormData {
  */
 export async function apiClient<T>(path: string, init: RequestInit = {}): Promise<T> {
   if (isUnsafeMethod(init.method)) {
-    await ensureCsrfCookie();
+    await ensureCsrfToken();
   }
 
-  const csrf = getCookie('XSRF-TOKEN');
+  const csrf = cachedCsrfToken || getCookie('XSRF-TOKEN');
 
   const headers: Record<string, string> = {};
   // Only set JSON content-type when sending JSON. Never for FormData.
@@ -153,21 +158,42 @@ export async function apiClient<T>(path: string, init: RequestInit = {}): Promis
   return (fallbackText || undefined) as unknown as T;
 }
 
-async function ensureCsrfCookie(): Promise<void> {
-  // If token already present, nothing to do.
-  if (getCookie('XSRF-TOKEN')) return;
+async function ensureCsrfToken(): Promise<void> {
+  if (cachedCsrfToken) return;
 
-  // Must succeed for unsafe requests when CSRF is enabled server-side.
-  await fetch(`${API_BASE_URL}/csrf`, { credentials: 'include' });
-
-  if (!getCookie('XSRF-TOKEN')) {
-    // This is almost always a cross-site cookie / CSRF cookie issue, not an auth issue.
-    // Returning an auth message here confuses users (“I am logged in but it says login”).
-    throw new ApiError(
-      403,
-      'Security token not set (CSRF). Please refresh and try again. If the problem persists, allow third‑party cookies for this site.',
-    );
+  // Always hit the backend CSRF bootstrap endpoint. It returns JSON:
+  // { token, headerName, parameterName }
+  const res = await fetch(`${API_BASE_URL}/csrf`, { credentials: 'include' });
+  if (!res.ok) {
+    throw new ApiError(res.status, UNAUTHENTICATED_MESSAGE);
   }
+
+  try {
+    const data = (await res.json()) as any;
+    if (data && typeof data.token === 'string' && data.token) {
+      cachedCsrfToken = data.token;
+      return;
+    }
+  } catch {
+    // ignore; fall back to cookie-based token
+  }
+
+  // Fallback: try cookie (works in same-site environments / local dev).
+  const cookieToken = getCookie('XSRF-TOKEN');
+  if (cookieToken) {
+    cachedCsrfToken = cookieToken;
+    return;
+  }
+
+  throw new ApiError(
+    403,
+    'Security token not set (CSRF). Please refresh and try again. If the problem persists, allow third‑party cookies for this site.',
+  );
+}
+
+// Backward-compatible alias
+async function ensureCsrfCookie(): Promise<void> {
+  return ensureCsrfToken();
 }
 
 function isUnsafeMethod(method: string | undefined): boolean {
