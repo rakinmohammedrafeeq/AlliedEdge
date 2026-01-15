@@ -229,10 +229,21 @@ export default function Feed() {
   };
 
   const filteredPosts = posts
-    .filter(post =>
-      postsSearchKeyword === '' ||
-      post.content.toLowerCase().includes(postsSearchKeyword.toLowerCase())
-    )
+    .filter((post) => {
+      const q = postsSearchKeyword.trim().toLowerCase();
+      if (!q) return true;
+
+      const haystacks = [
+        post.title,
+        post.content,
+        post.author?.name,
+        post.author?.username,
+      ]
+        .filter((v): v is string => typeof v === 'string' && v.trim().length > 0)
+        .map((v) => v.toLowerCase());
+
+      return haystacks.some((h) => h.includes(q));
+    })
     .sort((a, b) => {
       switch (sortBy) {
         case 'oldest':
