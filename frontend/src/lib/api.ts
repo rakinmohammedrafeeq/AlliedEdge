@@ -1003,7 +1003,7 @@ export const profileApi = {
       github: (u?.github as string | undefined) || data.github,
       linkedin: (u?.linkedin as string | undefined) || data.linkedin,
       twitter: (u?.twitter as string | undefined) ?? data.twitter,
-      location: (u?.resumeUrl as string | undefined) || data.location,
+      location: (u?.location as string | undefined) || data.location,
       resumeUrl: (u?.resumeUrl as string | undefined) || data.resumeUrl,
       followersCount: undefined,
       followingCount: undefined,
