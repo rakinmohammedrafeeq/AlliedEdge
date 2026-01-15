@@ -288,8 +288,10 @@ public class PostService {
         Sort sort = resolveSort(sortBy);
         Pageable sorted = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
-        if (keyword != null && !keyword.isBlank())
-            return postRepository.searchAllPosts(keyword, sorted);
+        String kw = (keyword == null) ? null : keyword.trim();
+        if (kw != null && !kw.isBlank()) {
+            return postRepository.searchAllPosts(kw, sorted);
+        }
 
         return postRepository.findAll(sorted);
     }
@@ -301,8 +303,10 @@ public class PostService {
         Sort sort = resolveSort(sortBy);
         Pageable sorted = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
-        if (keyword != null && !keyword.isBlank())
-            return postRepository.searchPostsByAuthor(author, keyword, sorted);
+        String kw = (keyword == null) ? null : keyword.trim();
+        if (kw != null && !kw.isBlank()) {
+            return postRepository.searchPostsByAuthor(author, kw, sorted);
+        }
 
         return postRepository.findByUser(author, sorted);
     }
