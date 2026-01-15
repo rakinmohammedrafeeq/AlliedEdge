@@ -237,7 +237,6 @@ export default function Feed() {
         post.title,
         post.content,
         post.author?.name,
-        post.author?.username,
       ]
         .filter((v): v is string => typeof v === 'string' && v.trim().length > 0)
         .map((v) => v.toLowerCase());
