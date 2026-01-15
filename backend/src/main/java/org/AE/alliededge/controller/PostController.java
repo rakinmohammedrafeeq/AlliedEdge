@@ -101,12 +101,9 @@ public class PostController {
 
         Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
-        Page<Post> postPage;
-        if (keyword != null && !keyword.isBlank()) {
-            postPage = postService.searchByTitle(keyword, sortedPageable);
-        } else {
-            postPage = postService.findAllPosts(sortedPageable);
-        }
+        // Normalize keyword and use the unified search query (title/content/author).
+        String kw = (keyword == null) ? null : keyword.trim();
+        Page<Post> postPage = postService.getAllPosts(kw, sortBy, sortedPageable);
 
         // Pre-compute comment counts for this page (avoid LAZY collection pitfalls)
         Map<Long, Integer> commentCountsByPostId = new HashMap<>();
