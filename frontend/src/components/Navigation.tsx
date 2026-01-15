@@ -45,8 +45,9 @@ export function Navigation() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/?search=${encodeURIComponent(searchQuery)}`);
+    const q = searchQuery.trim();
+    if (q) {
+      navigate(`/?search=${encodeURIComponent(q)}`);
     }
   };
 
