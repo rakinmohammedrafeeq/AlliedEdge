@@ -1,4 +1,8 @@
-# AlliedEdge
+<p align="center">
+  <img src="https://github.com/Rayan-Mohammed-Rafeeq/AlliedEdge/blob/main/frontend/public/logo.png" alt="AlliedEdge Logo" width="140"/>
+</p>
+
+<h1 align="center">AlliedEdge</h1>
 
 A full‑stack **social platform** built with a **Spring Boot (Java 17)** API and a **React (Vite + TypeScript)** SPA, featuring Google OAuth login, profiles & posts, media uploads via Cloudinary, and real-time updates over WebSockets (STOMP/SockJS).
 
