@@ -1,5 +1,6 @@
 package org.AE.alliededge.config;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,17 +30,12 @@ public class FrontendRedirectAuthenticationSuccessHandler implements Authenticat
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
-                                        Authentication authentication) throws IOException {
+                                        Authentication authentication) throws IOException, ServletException {
         // Ensure the session exists so Spring Security can store the Authentication
         request.getSession(true);
 
-        String base = (frontendRedirectUrl == null || frontendRedirectUrl.isBlank())
-                ? "/"
-                : frontendRedirectUrl;
-
-        // Add a cache-busting param so the SPA doesn't reuse a cached auth/status response
-        // right after OAuth redirect (observed in some privacy-focused browsers).
-        String sep = base.contains("?") ? "&" : "?";
-        response.sendRedirect(base + sep + "loggedIn=1&t=" + System.currentTimeMillis());
+        // Redirect back to the SPA. From there you can call backend APIs with cookies (credentials: 'include').
+        response.sendRedirect(frontendRedirectUrl);
     }
 }
+

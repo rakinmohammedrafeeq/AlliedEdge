@@ -91,20 +91,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   useEffect(() => {
     checkAuth();
-
-    // If we just returned from a login redirect, do one extra delayed auth check.
-    // This helps in privacy-focused browsers where cookies/session may become available
-    // a tick later or where an intermediate response is cached.
-    try {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('loggedIn') === '1') {
-        window.setTimeout(() => {
-          checkAuth();
-        }, 600);
-      }
-    } catch {
-      // ignore
-    }
   }, []);
 
   useEffect(() => {
