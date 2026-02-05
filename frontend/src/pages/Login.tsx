@@ -82,9 +82,9 @@ export default function Login() {
 
   const handleLogin = () => {
     // Backend-owned login flow.
-    // In production, Brave/private can block cross-site cookies.
-    // Start OAuth2 on the SAME origin as the SPA so Vercel rewrites can proxy it.
-    const origin = import.meta.env.DEV ? (BACKEND_ORIGIN || window.location.origin) : window.location.origin;
+    // In production behind a reverse proxy, BACKEND_ORIGIN may be "" to use same-origin.
+    // But oauth2 endpoint must still resolve correctly.
+    const origin = BACKEND_ORIGIN || window.location.origin;
     window.location.href = `${origin}/oauth2/authorization/google`;
   };
 

@@ -5,18 +5,6 @@
       "destination": "https://alliededge-backend.onrender.com/api/$1"
     },
     {
-      "source": "/oauth2/(.*)",
-      "destination": "https://alliededge-backend.onrender.com/oauth2/$1"
-    },
-    {
-      "source": "/login/oauth2/(.*)",
-      "destination": "https://alliededge-backend.onrender.com/login/oauth2/$1"
-    },
-    {
-      "source": "/logout",
-      "destination": "https://alliededge-backend.onrender.com/logout"
-    },
-    {
       "source": "/(.*)",
       "destination": "/"
     }
