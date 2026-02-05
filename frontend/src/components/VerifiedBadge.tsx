@@ -15,7 +15,7 @@ export type VerifiedBadgeProps = {
 
 /**
  * Small app-logo badge meant to sit next to a user's display name.
- * Uses the public `logo.png` so it works in dev/prod without bundler imports.
+ * Uses the public `logo.svg` so it works in dev/prod without bundler imports.
  */
 export function VerifiedBadge({ show, size = 16, className, title = 'Verified' }: VerifiedBadgeProps) {
     if (!show) return null;
@@ -53,7 +53,7 @@ export function VerifiedBadge({ show, size = 16, className, title = 'Verified' }
             }}
         >
             <img
-                src="/logo.png"
+                src="/logo.svg"
                 alt="Verified"
                 width={size}
                 height={size}

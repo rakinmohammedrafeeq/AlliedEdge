@@ -72,7 +72,7 @@ export function Navigation() {
         <div className="flex items-center gap-6">
           <Link to="/" className="flex items-center gap-2">
             <img
-              src="/logo.png"
+              src="/logo.svg"
               alt="AlliedEdge"
               className="h-10 w-auto"
             />

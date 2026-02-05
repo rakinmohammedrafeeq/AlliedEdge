@@ -35,7 +35,7 @@ export function LogoDropdown() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="h-10 w-10">
           <img
-            src="/logo.png"
+            src="/logo.svg"
             alt="Logo"
             width={32}
             height={32}

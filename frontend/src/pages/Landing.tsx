@@ -13,7 +13,7 @@ export default function Landing() {
         <div className="max-w-5xl mx-auto relative px-4 text-center">
           <div className="flex justify-center">
             <img
-              src="/logo.png"
+              src="/logo.svg"
               alt="AlliedEdge"
               width={64}
               height={64}
