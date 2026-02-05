@@ -10,25 +10,9 @@
 // In production, we MUST call the real backend origin (Render) unless the app is
 // deployed behind a same-origin reverse proxy. If you deploy a proxy, set
 // VITE_API_BASE_URL=/api in that environment.
-const API_BASE_URL_DEFAULT =
+const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   (import.meta.env.DEV ? '/api' : 'https://alliededge-backend.onrender.com/api');
-
-// In some browsers (notably Brave private), cross-site cookies can be blocked/partitioned.
-// If we detect we're calling a remote origin from a production SPA, prefer the same-origin
-// proxy (`/api`) when available.
-const API_BASE_URL = (() => {
-  const configured = API_BASE_URL_DEFAULT;
-  if (import.meta.env.DEV) return configured;
-
-  // If explicitly configured, respect it.
-  if (import.meta.env.VITE_API_BASE_URL) return configured;
-
-  // Default prod behavior: if the default is absolute, try to use same-origin proxy.
-  // This requires a host-level rewrite (e.g., Vercel `vercel.json`) to forward /api/*.
-  const isAbsolute = /^https?:\/\//i.test(configured);
-  return isAbsolute ? '/api' : configured;
-})();
 
 // Dev-time guard: if we're using the relative proxy base but the dev server isn't proxying,
 // requests can incorrectly hit :5173 and fail with 403/404.
