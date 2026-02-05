@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/Rayan-Mohammed-Rafeeq/AlliedEdge/blob/main/frontend/public/logo.png" alt="AlliedEdge Logo" width="140"/>
+  <img src="https://github.com/Rayan-Mohammed-Rafeeq/AlliedEdge/blob/main/frontend/public/logo.svg" alt="AlliedEdge Logo" width="140"/>
 </p>
 
 <h1 align="center">AlliedEdge</h1>
