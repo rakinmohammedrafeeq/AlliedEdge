@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
 import org.springframework.data.domain.PageRequest;
@@ -409,7 +410,7 @@ public class PostController {
     public ResponseEntity<Post> createPostAsAdmin(@ModelAttribute Post post,
                                                   @RequestParam(value = "imageFiles", required = false) List<MultipartFile> imageFiles,
                                                   @RequestParam(value = "videoFile", required = false) MultipartFile videoFile,
-                                                  Principal principal) {
+                                                  Principal principal) throws IOException {
 
         if (principal == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Not authenticated");
@@ -443,7 +444,7 @@ public class PostController {
                 throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
                         "Video file is too large. Max 100MB.");
             }
-            String videoUrl = cloudinaryService.uploadMedia(videoFile);
+            String videoUrl = cloudinaryService.uploadVideo(videoFile, "posts/videos");
             post.setVideoUrl(videoUrl);
         }
 
@@ -461,7 +462,7 @@ public class PostController {
                                                   @RequestParam(value = "videoFile", required = false) MultipartFile videoFile,
                                                   @RequestParam(value = "deleteImageId", required = false) List<Long> deleteImageIds,
                                                   @RequestParam(value = "deleteVideo", required = false) Boolean deleteVideo,
-                                                  Principal principal) {
+                                                  Principal principal) throws IOException {
 
         post.setId(id);
 
@@ -534,7 +535,7 @@ public class PostController {
                 }
             }
 
-            String videoUrl = cloudinaryService.uploadMedia(videoFile);
+            String videoUrl = cloudinaryService.uploadVideo(videoFile, "posts/videos");
             post.setVideoUrl(videoUrl);
         } else {
             post.setVideoUrl(effectiveVideoUrl);
@@ -552,7 +553,7 @@ public class PostController {
     public ResponseEntity<Post> createAuthorPost(@Valid @ModelAttribute Post post,
                                                  @RequestParam(value = "imageFiles", required = false) List<MultipartFile> imageFiles,
                                                  @RequestParam(value = "videoFile", required = false) MultipartFile videoFile,
-                                                 Principal principal) {
+                                                 Principal principal) throws IOException {
         if (principal == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Not authenticated");
         }
@@ -580,7 +581,7 @@ public class PostController {
                 throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
                         "Video file is too large. Max 100MB.");
             }
-            String videoUrl = cloudinaryService.uploadMedia(videoFile);
+            String videoUrl = cloudinaryService.uploadVideo(videoFile, "posts/videos");
             post.setVideoUrl(videoUrl);
         }
         String userEmail = principal.getName();
@@ -598,7 +599,7 @@ public class PostController {
                                            @RequestParam(value = "videoFile", required = false) MultipartFile videoFile,
                                            @RequestParam(value = "deleteImageId", required = false) List<Long> deleteImageIds,
                                            @RequestParam(value = "deleteVideo", required = false) Boolean deleteVideo,
-                                           Principal principal) {
+                                           Principal principal) throws IOException {
         post.setId(id);
         post.setDeleteVideo(Boolean.TRUE.equals(deleteVideo));
 
@@ -670,7 +671,7 @@ public class PostController {
                     cloudinaryService.deleteMediaByUrl(effectiveVideoUrl);
                 }
             }
-            String videoUrl = cloudinaryService.uploadMedia(videoFile);
+            String videoUrl = cloudinaryService.uploadVideo(videoFile, "posts/videos");
             post.setVideoUrl(videoUrl);
         } else {
             post.setVideoUrl(effectiveVideoUrl);

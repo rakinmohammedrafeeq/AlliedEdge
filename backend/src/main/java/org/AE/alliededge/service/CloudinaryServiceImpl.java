@@ -211,27 +211,35 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
     @Override
     public String uploadVideo(MultipartFile file, String folder) throws IOException {
+
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("Video file cannot be null or empty");
         }
 
-        try {
-            Map<String, Object> uploadParams = new HashMap<>();
-            uploadParams.put("resource_type", "video");
-            uploadParams.put("folder", folder);
+        try (InputStream inputStream = file.getInputStream()) {
+
+            Map<String, Object> uploadParams = ObjectUtils.asMap(
+                    "resource_type", "video",
+                    "folder", folder,
+                    "chunk_size", 6000000  // 6MB chunks
+            );
 
             @SuppressWarnings("unchecked")
-            Map<String, Object> uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadParams);
+            Map<String, Object> uploadResult =
+                    cloudinary.uploader().uploadLarge(inputStream, uploadParams);
 
             String secureUrl = (String) uploadResult.get("secure_url");
-            LOGGER.info("Uploaded video to: " + secureUrl);
+
+            LOGGER.info("Uploaded video successfully: " + secureUrl);
 
             return secureUrl;
+
         } catch (Exception e) {
-            LOGGER.severe("Failed to upload video to Cloudinary: " + e.getMessage());
-            throw new IOException("Failed to upload video to Cloudinary: " + e.getMessage(), e);
+            LOGGER.severe("Video upload failed: " + e.getMessage());
+            throw new IOException("Failed to upload video", e);
         }
     }
+
 
     @Override
     public void deleteVideo(String publicId) throws IOException {
