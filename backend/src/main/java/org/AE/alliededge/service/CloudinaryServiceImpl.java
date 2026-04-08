@@ -2,6 +2,7 @@ package org.AE.alliededge.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 @Service
+@ConditionalOnProperty(name = "cloudinary.enabled", havingValue = "true")
 public class CloudinaryServiceImpl implements CloudinaryService {
 
     private final Cloudinary cloudinary;
