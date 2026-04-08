@@ -1,5 +1,5 @@
 <p>
-  <img src="https://alliededge.app/logo.svg" alt="AlliedEdge Logo" width="140"/>
+  <img src="frontend/public/logo.svg" alt="AlliedEdge Logo" width="140"/>
 </p>
 
 <h1>AlliedEdge</h1>
