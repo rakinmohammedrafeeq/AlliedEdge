@@ -58,6 +58,7 @@ frontend/.vite/
 **/.vite/
 
 # Env/local overrides (keep secrets out of Git)
+backend/.env
 .env
 .env.*
 *.env
