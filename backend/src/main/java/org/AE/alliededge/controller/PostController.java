@@ -40,6 +40,8 @@ import java.util.*;
 import org.springframework.data.domain.PageRequest;
 import org.AE.alliededge.repository.CommentRepository;
 
+// Handles all post-related operations including feed retrieval,
+// post creation, updates, likes, comments, and real-time updates
 @RestController
 @RequestMapping("/api")
 public class PostController {
@@ -79,6 +81,7 @@ public class PostController {
     }
 
     // 🏠 Home Page / Feed
+    // Fetches paginated posts feed with sorting, search, and user-specific metadata
     @GetMapping("/posts")
     public ResponseEntity<Map<String, Object>> getPosts(
             @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
@@ -379,6 +382,7 @@ public class PostController {
         Comment saved = commentService.saveComment(postId, userEmail, commentDto);
 
         // Realtime: notify all subscribers that this post's counts changed.
+        // Publishes real-time updates (likes/comments) to subscribed clients via WebSockets
         postRealtimePublisher.publishPostStats(postId);
 
         PostDetailDto.CommentViewDto cd = new PostDetailDto.CommentViewDto();
