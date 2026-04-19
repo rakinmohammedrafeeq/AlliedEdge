@@ -4,13 +4,29 @@
 
 <h1>AlliedEdge</h1>
 
+## Contribution Note
+
+This project was developed collaboratively as part of a team.
+
+My contributions include:
+- Backend development using Java & Spring Boot
+- Authentication (JWT / OAuth2)
+- REST API design and integration
+- Real-time communication using WebSockets
+
+This repository is a personal copy maintained for portfolio purposes.
+
+Original team repository: <https://github.com/Rayan-Mohammed-Rafeeq/AlliedEdge>
+
+---
+
 A full‑stack **social platform** built with a **Spring Boot (Java 17)** API and a **React (Vite + TypeScript)** SPA, featuring Google OAuth login, profiles & posts, media uploads via Cloudinary, and real-time updates over WebSockets (STOMP/SockJS).
 
 **Live demo:** https://alliededge.app
 
 > Note: The backend is hosted on Render and may **cold start** after inactivity. The first request can take **up to ~3 minutes**; subsequent requests are fast.
 
-## Recruiter overview
+## Overview
 
 - This repo contains both the **backend API** (Spring Boot) and the **frontend SPA** (React/Vite).
 - Focus areas: **auth (Google OAuth)**, **real-time WebSockets**, **data modeling with JPA/Hibernate**, **Flyway migrations**, and **production deployment considerations** (secure cookies, proxy headers, CORS).
@@ -71,15 +87,11 @@ A full‑stack **social platform** built with a **Spring Boot (Java 17)** API an
 - **Live site:** https://alliededge.app
 - **Google OAuth flow details:** `frontend/docs/google-login.md`
 
-## Usage & academic integrity
+## Usage
 
-This repository is public **for recruiter/hiring-manager review**.
+This repository is shared for portfolio and recruiter evaluation purposes.
 
-- **Do not copy, clone, fork, or reuse** this project (in whole or in part) for coursework, assignments, hackathons, or any submission where you are expected to produce original work.
-- **Do not re-upload** the source or deploy it as your own (including “portfolio” clones).
-- You may **read the code** to evaluate my work. If you want to reuse any portion, please **request permission first**.
-
-In addition to the note above, the project is licensed as **proprietary / all rights reserved** (see **License**).
+Please do not reuse the project for academic submissions or claim it as your own work.
 
 ## Local development (for evaluation)
 
@@ -231,9 +243,6 @@ If they’re missing, the backend will fail fast at startup.
 
 ## License
 
-All rights reserved. This project is proprietary.
+This project is shared for portfolio and evaluation purposes only.
 
-- You are **not granted permission** to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software.
-- For permission requests (e.g., recruiter evaluation, interview take-home, or other authorized review), contact me via GitHub.
-
-See [`LICENSE`](LICENSE).
+Please do not reuse the project for academic submissions or claim it as your own work.
