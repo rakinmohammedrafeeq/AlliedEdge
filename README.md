@@ -4,22 +4,24 @@
 
 <h1>AlliedEdge</h1>
 
+---
+
 ## Contribution Note
 
 This project was developed collaboratively as part of a team.
 
 My contributions include:
-- Backend development using Java & Spring Boot
-- Authentication (JWT / OAuth2)
-- REST API design and integration
-- Real-time communication using WebSockets
+- Backend development using Java & Spring Boot  
+- Authentication (JWT / OAuth2)  
+- REST API design and integration  
+- Real-time communication using WebSockets  
 
 ### My Role
 Focused on backend development, authentication, and API design.
 
 This repository is a personal copy maintained for portfolio purposes.
 
-Original team repository: <https://github.com/Rayan-Mohammed-Rafeeq/AlliedEdge>
+Original team repository: https://github.com/Rayan-Mohammed-Rafeeq/AlliedEdge
 
 ---
 
