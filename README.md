@@ -1,33 +1,28 @@
 <p align="center">
-  <img src="frontend/public/logo.svg" alt="AlliedEdge Logo" width="140"/>
+  <img src="https://raw.githubusercontent.com/rakinmohammedrafeeq/AlliedEdge/main/frontend/public/logo.svg" width="140"/>
 </p>
 
-<h1>AlliedEdge</h1>
-
-## Contribution Note
-
-This project was developed collaboratively as part of a team.
-
-My contributions include:
-- Backend development using Java & Spring Boot  
-- Authentication (JWT / OAuth2)  
-- REST API design and integration  
-- Real-time communication using WebSockets  
-
-### My Role
-Focused on backend development, authentication, and API design.
-
-This repository is a personal copy maintained for portfolio purposes.
-
-Original team repository: https://github.com/Rayan-Mohammed-Rafeeq/AlliedEdge
-
----
+# AlliedEdge — Full-Stack Real-Time Social Platform
 
 A full‑stack **social platform** built with a **Spring Boot (Java 17)** API and a **React (Vite + TypeScript)** SPA, featuring Google OAuth login, profiles & posts, media uploads via Cloudinary, and real-time updates over WebSockets (STOMP/SockJS).
 
 **Live demo:** https://alliededge.app
 
 > Note: The backend is hosted on Render and may **cold start** after inactivity. The first request can take **up to ~3 minutes**; subsequent requests are fast.
+
+## Features
+
+- Google OAuth2 authentication (backend-driven)
+- Real-time chat using WebSockets (STOMP/SockJS)
+- User profiles and post creation
+- Media uploads via Cloudinary
+- Secure backend with Spring Security and JWT
+- Database migrations using Flyway
+- Full-stack deployment (Vercel + Render)
+
+## Why AlliedEdge?
+
+AlliedEdge was built to demonstrate real-world full-stack engineering concepts such as OAuth-based authentication, real-time communication, scalable backend architecture, and cloud-based media handling.
 
 ## Overview
 
@@ -37,7 +32,23 @@ A full‑stack **social platform** built with a **Spring Boot (Java 17)** API an
 
 > If you’d like a guided walkthrough, start with the **Highlights** section and the **Demo video** below.
 
-## Highlights
+## Contribution
+
+This project was developed collaboratively as part of a team.
+
+My contributions:
+- Backend development using Java and Spring Boot  
+- Implementation of authentication (JWT and OAuth2)  
+- REST API design and integration  
+- Real-time communication using WebSockets  
+
+**Role:** Focused on backend development, authentication, and API design.
+
+This repository is a personal copy maintained for portfolio purposes.
+
+Original team repository: https://github.com/Rayan-Mohammed-Rafeeq/AlliedEdge
+
+## Key Highlights
 
 - **Google OAuth2 login (backend-driven)** via Spring Security
 - **Real-time chat** using WebSockets (STOMP/SockJS on the client)
@@ -47,7 +58,7 @@ A full‑stack **social platform** built with a **Spring Boot (Java 17)** API an
 - **Deployed**: **Frontend on Vercel**, **Backend on Render**
 - **Dev-friendly**: Vite proxying to backend (`/api`, `/ws`, OAuth routes)
 
-## Tech stack
+## Tech Stack
 
 **Frontend**
 - React + TypeScript (Vite)
@@ -79,6 +90,13 @@ A full‑stack **social platform** built with a **Spring Boot (Java 17)** API an
 - **Database (Postgres)** stores app data; schema is managed via **Flyway**.
 - **Cloudinary** stores uploaded media.
 
+## API Overview
+
+- `/api/auth/*` — authentication and OAuth flow  
+- `/api/users/*` — user profile management  
+- `/api/posts/*` — post creation and retrieval  
+- `/ws/*` — WebSocket endpoints for real-time communication  
+
 ## Repo layout
 
 - `backend/` — Spring Boot API + auth + realtime WebSocket endpoints
@@ -92,9 +110,9 @@ A full‑stack **social platform** built with a **Spring Boot (Java 17)** API an
 
 ## Usage
 
-This repository is shared for portfolio and recruiter evaluation purposes.
+This repository is shared for portfolio and evaluation purposes.
 
-Please do not reuse the project for academic submissions or claim it as your own work.
+Please respect academic integrity and avoid submitting this project as your own work.
 
 ## Local development (for evaluation)
 
@@ -234,7 +252,7 @@ If they’re missing, the backend will fail fast at startup.
 - **Google login redirect mismatch**: ensure the Google OAuth client has the correct redirect URI:
   - `http://localhost:8080/login/oauth2/code/google`
 - **Cookies not sticking in production**: backend is configured for `SameSite=None; Secure` and proxy headers; ensure you’re using HTTPS.
-
+<!--
 ## Demo Video
 
 <p>
@@ -242,10 +260,25 @@ If they’re missing, the backend will fail fast at startup.
     <img src="https://img.youtube.com/vi/GJCqGL8KnIw/maxresdefault.jpg" width="600" alt="AlliedEdge demo video thumbnail"/>
   </a>
 </p>
-
+-->
 
 ## License
 
 This project is shared for portfolio and evaluation purposes only.
 
 Please do not reuse the project for academic submissions or claim it as your own work.
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Contact  
+
+**For any questions or suggestions, feel free to reach out:**   
+- **Email:** rakinmohammedrafeeq@gmail.com  
+- **LinkedIn:** https://www.linkedin.com/in/rakinmohammedrafeeq  
+- **GitHub:** https://github.com/rakinmohammedrafeeq
+
+## Support  
+
+If you find this project useful, consider giving it a ⭐ on GitHub or supporting my work:  
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/rakinmohammedrafeeq)
