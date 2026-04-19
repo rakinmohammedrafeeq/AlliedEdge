@@ -14,6 +14,9 @@ My contributions include:
 - REST API design and integration
 - Real-time communication using WebSockets
 
+### My Role
+Focused on backend development, authentication, and API design.
+
 This repository is a personal copy maintained for portfolio purposes.
 
 Original team repository: <https://github.com/Rayan-Mohammed-Rafeeq/AlliedEdge>
