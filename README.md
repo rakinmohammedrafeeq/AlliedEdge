@@ -1,4 +1,4 @@
-<p>
+<p align="center">
   <img src="frontend/public/logo.svg" alt="AlliedEdge Logo" width="140"/>
 </p>
 
