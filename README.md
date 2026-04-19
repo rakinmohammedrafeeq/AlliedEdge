@@ -4,8 +4,6 @@
 
 <h1>AlliedEdge</h1>
 
----
-
 ## Contribution Note
 
 This project was developed collaboratively as part of a team.
