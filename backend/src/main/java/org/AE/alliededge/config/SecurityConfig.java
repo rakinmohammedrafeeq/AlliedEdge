@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+// Configures Spring Security for authentication, authorization,
+// OAuth2 login flow, and API access control for the application
 public class SecurityConfig {
 
     private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
@@ -131,6 +133,7 @@ public class SecurityConfig {
             )
 
             // Backend-owned login flow.
+            // Handles Google OAuth2 login and redirects user to frontend after authentication
             .oauth2Login(oauth -> oauth
                 .loginPage("/login")
                 .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
